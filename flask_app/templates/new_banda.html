@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Banda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <header class="cabecera" style="background-image: URL({{url_for('static', filename='img/frontbandas.jpg')}})" ;>
+        <div class="tlt">
+            <div class="col-md-6 col-lg-6 col-xl-8">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 style="display:block;text-align:center;">Bienvenid@ {{user.nombre}}!</h1>
+                    <div class="botones">
+                        <a href="/bandas" class="btn btn-primary">Volver</a>
+                        <a href="/logout" class="btn btn-danger">Cerrar sesión</a>
+                    </div>
+                </div>
+                <h2>Añade tus bandas o artista: </h2>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <hr>
+        {% with messages = get_flashed_messages(category_filter=['banda']) %}
+        {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!--Creamos el formulario para ingresar las reseñas de las bandas-->
+        <form action="/create/banda" method="post">
+            <!--Agregamos el id del usuario que está escribiendo-->
+            <input type="hidden" value="{{user.id}}" name="user_id">
+            <div class="form-group">
+                <label for="genero">Genero musical</label>
+                <textarea id="genero" name="genero" class="form-control"></textarea>
+                <!--<select size="2" multiple type="text" id="genero" name="genero" class="form-control">
+                        con ctrl + clic se puede seleccionar vaias
+
+                    <option disabled select>Seleccione un genero</option>
+                    <option>Rock</option>
+                    <option>Pop</option>
+                    <option>Alternativa</option>
+                    <option>Jazz</option>
+                    <option>Clásica</option>
+                    <option>Blues</option>
+                    <option>Rap</option>
+                    <option>Electronica</option>
+                    <option>Otros</option>
+                </select>-->
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <textarea id="nombre" name="nombre" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="pais_banda">Pais del grupo musical:</label>
+                <textarea type="text" id="pais_banda" name="pais_banda" class="form-control"></textarea>
+                <!-- <select size="2" multiple type="text" id="pais_banda" name="pais_banda" class="form-control">
+                    con ctrl + clic se puede seleccionar vaias, solo ponemos algunos paises donde hayan más bandas, lo demás queda como otros 
+
+                    <option disabled select>Seleccione un Pais</option>
+                    <option>Alemania</option>
+                    <option>Argentina</option>
+                    <option>Australia</option>
+                    <option>Austria</option>
+                    <option>Bélgica</option>
+                    <option>Canadá</option>
+                    <option>Chile</option>
+                    <option>Colombia</option>
+                    <option>España</option>
+                    <option>Estados Unidos</option>
+                    <option>Estonia</option>
+                    <option>Filipinas</option>
+                    <option>Francia</option>
+                    <option>Irlanda</option>
+                    <option>Islandia</option>
+                    <option>Liechtenstein</option>
+                    <option>Luxemburgo</option>
+                    <option>México</option>
+                    <option>Países Bajos</option>
+                    <option>Reino Unido</option>
+                    <option>Suecia</option>
+                    <option>Suiza</option>
+                    <option>Otros</option>-->
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="release_date">Fecha de creación</label>
+                <input type="date" id="release_date" name="release_date" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="comentarios">Comentarios y recomendaciones de albums:</label>
+                <textarea id="comentarios" name="comentarios" class="form-control"></textarea>
+            </div>
+
+            <!--Añadir puntuuación-->
+            <div class="form-group">-->
+                <label for="estrellas">Puntuación de 1 a 5</label>
+                <input type="number" id="estrellas" name="estrellas" max="5" min="1" class="form-control">
+            </div>
+
+            <hr>
+            <input type="submit" value="Guardar" class="btn btn-success">
+        </form>
+    </div>
+</body>
+
+</html>

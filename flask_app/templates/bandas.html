@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <style>
+        body {
+            background: url(img/frontbandas.jpg);
+            height: 100%;
+        }
+    </style>
+    <header class="cabecera" style="background-image: URL({{url_for('static', filename='img/frontbandas.jpg')}})" ;>
+        <div class="tlt">
+            <div class="col-md-6 col-lg-6 col-xl-8">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 style="display:block;text-align:center;">Bienvenid@ {{user.nombre}}!</h1>
+                    <div class="botones">
+                        <a href="/new/banda" class="btn btn-primary">+ Agregar banda</a>
+                        <a href="/logout" class="btn btn-danger">Cerrar sesión</a>
+                    </div>
+                </div>
+                <h2>Añade tus bandas o artista: </h2>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr class="table-secondary">
+                    <th>Genero</th>
+                    <th>Nombre</th>
+                    <th>Fecha de creación</th>
+                    <th>Reseña por</th>
+                    <th>Puntuación</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for banda in bandas %}
+                <tr>
+                    <td>{{banda.genero}}</td>
+                    <td>{{banda.nombre}}</td>
+                    <td>{{banda.release_date}}</td>
+                    <td>{{banda.apellido}}</td>
+                    <td>{{banda.estrellas}}
+                    </td>
+                    <!--Las acciones de editar y borrar solo estarán disponibles para quienes  crearon una reseña-->
+                    <td>
+                        <a href="/view/banda/{{banda.user_id}}" class="btn btn-warning">Ver</a>
+                        {% if user.id == banda.user_id %}
+                        <a href="/edit/banda/{{banda.user_id}}" class="btn btn-primary">Editar</a>
+                        <a href="/delete/banda/{{banda.user_id}}" class="btn btn-danger">Borrar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
